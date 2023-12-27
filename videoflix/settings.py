@@ -32,6 +32,11 @@ ALLOWED_HOSTS = [
 ]
 
 
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:4200',
+    ]
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -44,10 +49,13 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_framework',
     'videoflix_app.apps.VideoflixAppConfig',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
