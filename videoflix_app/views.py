@@ -8,7 +8,14 @@ from rest_framework.authentication import TokenAuthentication, BasicAuthenticati
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import permissions
 from rest_framework.authtoken.models import Token
+from django.core.cache.backends.base import DEFAULT_TIMEOUT
+from videoflix import settings
 from .serializers import (UserSerializer)
+from django.views.decorators.cache import cache_page
+
+
+CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
+
 
 
 class RegisterView(APIView):    
@@ -50,3 +57,7 @@ class LogoutView(APIView):
     def post(self, request):
         request.user.auth_token.delete()
         return Response(status=status.HTTP_200_OK)
+    
+
+
+# @cache_page(CACHE_TTL)

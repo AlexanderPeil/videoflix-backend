@@ -32,6 +32,9 @@ ALLOWED_HOSTS = [
 ]
 
 
+CACHE_TTL = 60 * 15
+
+
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:4200',
     ]
@@ -50,9 +53,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'videoflix_app.apps.VideoflixAppConfig',
     'corsheaders',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -61,7 +66,12 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware'
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+
+INTERNAL_IPS = [
+    "127.0.0.1",
 ]
 
 
