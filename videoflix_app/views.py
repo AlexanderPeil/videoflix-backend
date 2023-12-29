@@ -10,12 +10,9 @@ from rest_framework import permissions
 from rest_framework.authtoken.models import Token
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
 from videoflix import settings
-from .serializers import (UserSerializer)
+from .serializers import UserSerializer, VideoSerializer
+from .models import Video
 from django.views.decorators.cache import cache_page
-
-
-CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
-
 
 
 class RegisterView(APIView):    
@@ -60,4 +57,21 @@ class LogoutView(APIView):
     
 
 
-# @cache_page(CACHE_TTL)
+class VideoView(APIView):
+    CACHETTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    @cache_page(CACHETTL)
+    def list(self, request):
+        videos = Video.objects.all()
+        serializer = VideoSerializer(videos, many=True)
+    
+        return Response(serializer.data)
+    
+    def create(self, request):
+        serializer = VideoSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)

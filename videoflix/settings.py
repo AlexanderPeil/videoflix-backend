@@ -54,7 +54,7 @@ INSTALLED_APPS = [
     'videoflix_app.apps.VideoflixAppConfig',
     'corsheaders',
     'debug_toolbar',
-    'django_rq,'
+    'django_rq',
 ]
 
 MIDDLEWARE = [
@@ -76,37 +76,8 @@ RQ_QUEUES = {
         'HOST': 'localhost',
         'PORT': 6379,
         'DB': 0,
-        'USERNAME': 'some-user',
-        'PASSWORD': 'some-password',
-        'DEFAULT_TIMEOUT': 360,
-        'REDIS_CLIENT_KWARGS': {    
-            'ssl_cert_reqs': None,
-        },
-    },
-    'with-sentinel': {
-        'SENTINELS': [('localhost', 26736), ('localhost', 26737)],
-        'MASTER_NAME': 'redismaster',
-        'DB': 0,
-        'USERNAME': 'redis-user',
-        'PASSWORD': 'secret',
-        'SOCKET_TIMEOUT': 0.3,
-        'CONNECTION_KWARGS': {  
-            'ssl': True
-        },
-        'SENTINEL_KWARGS': {   
-            'username': 'sentinel-user',
-            'password': 'secret',
-        },
-    },
-    'high': {
-        'URL': os.getenv('REDISTOGO_URL', 'redis://localhost:6379/0'), 
-        'DEFAULT_TIMEOUT': 500,
-    },
-    'low': {
-        'HOST': 'localhost',
-        'PORT': 6379,
-        'DB': 0,
-    }
+        'PASSWORD':'foobared',
+    },    
 }
 
 
