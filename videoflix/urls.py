@@ -19,12 +19,20 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from videoflix_app.views import RegisterView, LoginView, LogoutView
+from videoflix_app.views import (
+    RegisterView, 
+    LoginView, 
+    LogoutView, 
+    VideoView,
+    VideoDetailView
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', LoginView.as_view(), name='login'),
     path('signup/', RegisterView.as_view(), name='signup'),
     path('logout/', LogoutView.as_view(), name='logout'),
-    path("__debug__/", include("debug_toolbar.urls")),
+    path('__debug__/', include("debug_toolbar.urls")),
+    path('videos/', VideoView.as_view(), name='videos'),
+    path('videos/<int:pk>', VideoDetailView.as_view(), name='video-detail'),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

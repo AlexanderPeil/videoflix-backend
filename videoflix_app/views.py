@@ -75,3 +75,24 @@ class VideoView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class VideoDetailView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, pk):
+        try:
+            video = Video.objects.get(pk=pk)
+            serializer = VideoSerializer(video)
+            return Response(serializer.data)
+        except:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        
+    def delete(self, request, pk):
+        try:
+            video = Video.objects.get(pk=pk)
+            video.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Video.DoesNotExist:
+            raise Response(status=status.HTTP_404_NOT_FOUND)
