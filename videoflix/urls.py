@@ -35,4 +35,5 @@ urlpatterns = [
     path('__debug__/', include("debug_toolbar.urls")),
     path('videos/', VideoView.as_view(), name='videos'),
     path('videos/<int:pk>', VideoDetailView.as_view(), name='video-detail'),
+    path('django-rq/', include('django_rq.urls')),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
